@@ -239,18 +239,7 @@ export async function modelMatch() {
   let updatedCount;
   do {
     console.log(`Updating LANGFUSETMPNOMODEL ${updatedCount}`);
-    const result = await prisma.$queryRaw<[{ id: string }]>`
-    WITH to_update AS (
-      SELECT id 
-      FROM observations 
-      WHERE internal_model = 'LANGFUSETMPNOMODEL'
-      AND "type" = 'GENERATION'
-      LIMIT 50000
-    )
-    UPDATE observations
-    set internal_model = NULL
-    WHERE id IN (SELECT id FROM to_update)
-    RETURNING id;`;
+    const result = await prisma.$queryRawTyped(TypedSQL.updateObservations());
     updatedCount = result.length;
   } while (updatedCount > 0);
 
