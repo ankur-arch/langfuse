@@ -14,7 +14,7 @@ export * from "./utils/zod";
 export * from "./utils/json";
 export * from "./utils/objects";
 export { env } from "./env";
-export { TypedSQL } from "./db";
+export * from "./typedSql";
 
 // llm api
 export * from "./server/llm/types";

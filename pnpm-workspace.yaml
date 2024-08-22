@@ -6,4 +6,3 @@ packages:
   - "ee"
 hoist:
   - "@prisma/client"
-  - "@prisma+client@5.18.0-integration-feat-typed-sql.1_prisma@5.18.0-integration-feat-typed-sql.1"

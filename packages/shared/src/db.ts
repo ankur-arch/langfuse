@@ -1,10 +1,8 @@
 // This file exports the prisma db connection, the Prisma Object, and the Typescript types.
 // This is not imported in the index.ts file of this package, as we must not import this into FE code.
-
 import { PrismaClient } from "@prisma/client";
 import { env } from "process";
 import kyselyExtension from "prisma-extension-kysely";
-import { updateObservations } from "../../../node_modules/.pnpm/@prisma+client@5.18.0-integration-feat-typed-sql.1_prisma@5.18.0-integration-feat-typed-sql.1/node_modules/.prisma/client/sql";
 
 import {
   Kysely,
@@ -53,9 +51,5 @@ export const prisma = globalThis.prisma ?? prismaClientSingleton();
 export const kyselyPrisma = globalThis.kyselyPrisma ?? kyselySingleton(prisma);
 
 export * from "@prisma/client";
-
-export const TypedSQL = {
-  updateObservations,
-};
 
 if (process.env.NODE_ENV !== "production") globalThis.prisma = prisma;
