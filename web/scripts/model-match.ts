@@ -10,6 +10,7 @@ import { prisma } from "@langfuse/shared/src/db";
 import lodash from "lodash";
 import { tokenCount } from "@/src/features/ingest/usage";
 import { type Prisma } from "@langfuse/shared/src/db";
+import { TypedSQL } from "@langfuse/shared";
 
 async function main() {
   return await modelMatch();
@@ -239,18 +240,7 @@ export async function modelMatch() {
   let updatedCount;
   do {
     console.log(`Updating LANGFUSETMPNOMODEL ${updatedCount}`);
-    const result = await prisma.$queryRaw<[{ id: string }]>`
-    WITH to_update AS (
-      SELECT id 
-      FROM observations 
-      WHERE internal_model = 'LANGFUSETMPNOMODEL'
-      AND "type" = 'GENERATION'
-      LIMIT 50000
-    )
-    UPDATE observations
-    set internal_model = NULL
-    WHERE id IN (SELECT id FROM to_update)
-    RETURNING id;`;
+    const result = await prisma.$queryRawTyped(TypedSQL.updateObservations());
     updatedCount = result.length;
   } while (updatedCount > 0);
 
